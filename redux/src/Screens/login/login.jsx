@@ -1,17 +1,17 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { useContextSelector } from 'Hooks';
+import { login } from 'Store/auth';
 
 import * as Styled from './styled';
 import { Form, SuccessSign } from './components';
 
 export const LoginScreen = () => {
-  const authSlice = useContextSelector('auth');
-  const { token } = authSlice.state;
-  const { login } = authSlice.handlers;
+  const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
 
   const onSubmit = (formValues) => {
-    login(formValues);
+    dispatch(login(formValues));
   };
 
   return (

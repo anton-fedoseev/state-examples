@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Input, Button } from 'Components';
-import { useContextSelector } from 'Hooks';
+import { resetMeta } from 'Store/auth';
 
 import * as Styled from './styled';
 
 export const Form = ({ onSubmit }) => {
-  const authSlice = useContextSelector('auth');
-  const { error } = authSlice.state;
-  const { resetMeta } = authSlice.handlers;
-
+  const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.auth);
   const [formValues, setFormValues] = useState({ login: '', password: '' });
   const [formErrors, setFormErrors] = useState({ login: '', password: '' });
 
   useEffect(() => {
     if (error) {
-      setTimeout(() => resetMeta(), 3000);
+      setTimeout(() => dispatch(resetMeta()), 3000);
     }
-  }, [error]);
+  }, [error, dispatch]);
 
   const onChange = (name, value) => {
     setFormErrors({
